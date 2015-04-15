@@ -3,7 +3,7 @@ Learn to Code LA's Meetup and Slack Integration
 
 This is a fun little python experiment I'm building out while I learn to code.
 
-meetup-slack will be an importable library to do meetup announcements in slack.
+meetup-slack is a library that connects slack and meetup through their respective api's to do meetup announcements in slack.
 
 ###The main features are:
 point to a meetup group using an API
@@ -20,3 +20,16 @@ periodically based off of some activity threshold in the active spun up chat roo
 messages will be formatted pretty and include easy links with emojiis that display things like available slots and location (clicking will make a call to the google maps api and chart a person from their current location)
 
 The overall idea will be to minimize the need to even bother going through meetup, BECAUSE WHY WHEN WE CAN SLACK?!?!?!?!?
+
+
+##config.conf
+config.conf is a config file that holds all of the api calls / information.  It's a simple dictionary in the following format:
+
+...
+{
+	'slack_webhook_qa': 'webhook for slack room',
+        'slack_webhook_dev': 'webhook for slack room',
+        'meetup_api': 'api call for meetup',
+        'google_api': 'api call for google maps'
+}
+...
