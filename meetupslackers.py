@@ -3,6 +3,7 @@ import requests, json, time, csv, logging, os, re
 #this isn't very pythonic yet, so chillax: I'm working on getting there :-D
 class meetupslackers(object):
 	def __init__(self): 
+		print "this isn't working"
 		logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
 		logging.info("meetupslackers initiated")
 		self.config = self.openConfig("config.conf")
