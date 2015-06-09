@@ -12,6 +12,8 @@ class meetupslackers(object):
 		self.json_keys = ['name','how_to_find_us','maybe_rsvp_count','headcount','waitlist_count','time','yes_rsvp_count','id','visibility','updated','rsvp_limit','created','description','event_url','utc_offset','status','group','venue']
 		self.json_group = ['who', 'name', 'group_lat', 'created','join_mode','group_lon', 'urlname', 'id']
 		self.json_venue = ['city','name','zip','country','lon','state','address_1','repinned','lat','id']
+		print self.http_webhook
+		print "it should have printed"		
 
 	#check if file has contents: false = empty
 	def fileHasContents(self, filename):	
