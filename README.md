@@ -33,3 +33,6 @@ config.conf is a config file that holds all of the api calls / information.  It'
         'google_api': 'api call for google maps'
 }
 ...
+
+
+*note that meetup_api is actually : https://secure.meetup.com/meetup_api/console/?path=/2/events
