@@ -163,7 +163,7 @@ class meetupslackers(object):
 		for count in range(len(events)):
 			r = requests.post(self.http_webhook, data=json.dumps(self.formatSlackMessage(events[count], botname, emoji, message_add)))
 
-if __name__ == '__main__':
-	print "wtf"
-	meetupIntegration = meetupslackers()
-	meetupIntegration.announce(meetupIntegration.parseJson(meetupIntegration.json_keys, meetupIntegration.json_group, meetupIntegration.json_venue))
+#if __name__ == '__main__':
+print "wtf"
+meetupIntegration = meetupslackers()
+meetupIntegration.announce(meetupIntegration.parseJson(meetupIntegration.json_keys, meetupIntegration.json_group, meetupIntegration.json_venue))
