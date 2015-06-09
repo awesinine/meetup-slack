@@ -6,8 +6,8 @@ class meetupslackers(object):
 		logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
 		logging.info("meetupslackers initiated")
 		self.config = self.openConfig("config.conf")
-        	self.http_webhook = self.config['slack_webhook_dev']
-        	self.http_webhook = os.environ['slack_webhook_general']
+        	#self.http_webhook = self.config['slack_webhook_dev']
+        	self.http_webhook = os.environ['slack_webhook_dev']
 	        self.meetupJson = self.loadMeetup()
 		self.json_keys = ['name','how_to_find_us','maybe_rsvp_count','headcount','waitlist_count','time','yes_rsvp_count','id','visibility','updated','rsvp_limit','created','description','event_url','utc_offset','status','group','venue']
 		self.json_group = ['who', 'name', 'group_lat', 'created','join_mode','group_lon', 'urlname', 'id']
@@ -82,7 +82,8 @@ class meetupslackers(object):
 	def loadMeetup(self):	
 		logging.info("loadMeetup called, opening config.conf")
 		config = self.openConfig("config.conf")	
-		r = requests.get(config['meetup_api'])
+		r = requests.get(os.environ['meetup_api'])
+		#r = requests.get(config['meetup_api'])
 		return r.json()
 
 	#really really really ugly json parsing, this was a first draft and a candidate for reworking asap
