@@ -3,13 +3,14 @@ import requests, json, time, csv, logging, os, re
 #this isn't very pythonic yet, so chillax: I'm working on getting there :-D
 class meetupslackers(object):
 	def __init__(self): 
-		print "this isn't working"
+
 		logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
 		logging.info("meetupslackers initiated")
 		self.config = self.openConfig("config.conf")
         	#self.http_webhook = self.config['slack_webhook_dev']
         	self.http_webhook = os.environ['slack_webhook_dev']
-	        self.meetupJson = self.loadMeetup()
+	        print "I dont fuck with you"
+		self.meetupJson = self.loadMeetup()
 		self.json_keys = ['name','how_to_find_us','maybe_rsvp_count','headcount','waitlist_count','time','yes_rsvp_count','id','visibility','updated','rsvp_limit','created','description','event_url','utc_offset','status','group','venue']
 		self.json_group = ['who', 'name', 'group_lat', 'created','join_mode','group_lon', 'urlname', 'id']
 		self.json_venue = ['city','name','zip','country','lon','state','address_1','repinned','lat','id']
