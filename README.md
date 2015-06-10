@@ -26,13 +26,17 @@ The overall idea will be to minimize the need to even bother going through meetu
 config.conf is a config file that holds all of the api calls / information.  It's a simple dictionary in the following format:
 
 ...
+
 {
 	'slack_webhook_qa': 'webhook for slack room',
         'slack_webhook_dev': 'webhook for slack room',
         'meetup_api': 'api call for meetup',
         'google_api': 'api call for google maps'
 }
+
 ...
+
+#Going to need to update this when I've had some :coffee: because It's getting a heroku treatment :heart:
 
 
 *note that meetup_api is actually : https://secure.meetup.com/meetup_api/console/?path=/2/events
