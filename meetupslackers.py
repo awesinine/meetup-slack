@@ -5,19 +5,12 @@ class meetupslackers(object):
 	def __init__(self): 
 		logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
 		logging.info("meetupslackers initiated")
-		#self.config = self.openConfig("config.conf")
-        	#self.http_webhook = self.config['slack_webhook_dev']
         	self.http_webhook = os.environ['slack_webhook_dev']
 		self.meetupJson = self.loadMeetup()
 		self.json_keys = ['name','how_to_find_us','maybe_rsvp_count','headcount','waitlist_count','time','yes_rsvp_count','id','visibility','updated','rsvp_limit','created','description','event_url','utc_offset','status','group','venue']
 		self.json_group = ['who', 'name', 'group_lat', 'created','join_mode','group_lon', 'urlname', 'id']
 		self.json_venue = ['city','name','zip','country','lon','state','address_1','repinned','lat','id']
 
-	#check if file has contents: false = empty
-	#def fileHasContents(self, filename):	
-		#logging.info("file has contents")
-	#	return True if os.path.isfile(filename) and os.path.getsize(filename) > 0 else False	
-     
 	#simple slack message: botname, emoji and message
         def create_message(self, botname, emoji, message): 
 		logging.info("create_message")
@@ -26,18 +19,18 @@ class meetupslackers(object):
 
         #pushes a complicated slack message which includes attachments, could more than likely call the simple message and extend it with finer details to save some code
         def create_message_test(self, botname, emoji, message, title, title_link, img_url, color): 
-		#logging.info("create_message_test")
+		logging.info("create_message_test")
 		payload={"username": botname, "icon_emoji": emoji, "attachments": [ {"fallback": message, "title": title, "title_link": title_link, "image_url": img_url, "text": message, "color": color}]}
                 return payload
 
  	#this is the meetup slack message, formated to look all nice and shit: huge candidate for cleanup
         def formatSlackMessage(self, event, botname, emoji, message_add):
-                #logging.info("formatSlackMessage")
+                logging.info("formatSlackMessage")
 		spacer = "\t\t"
 		eventNameLink = "<" + event['event_url'] + "|" + event['name'] + ">"
 		map = ":pushpin:" + spacer + "<" + "https://www.google.com/maps/dir//" + (event['venue_address_1']).replace(" ", "+") + "+" + (event['venue_city']).replace(" ", "+") + "+" + (event['venue_state']).replace(" ", "+") + "+" + (event['venue_zip']).replace(" ", "+") + "|" + event['venue_name'] + ">"
 		description = (re.sub('<[^<]+?>', '', (event['description'])))[:144] + "..."
-		eventTime = time.strftime('%a, %b %d %I:%M %p', time.localtime((event['time'] / 1000)))
+		eventTime = time.strftime('%a, %b %d %I:%M %p', time.localtime((event['time'])))
                 message = description + "\n" + ":loudspeaker:" + spacer + eventTime  + "\n:users:" + spacer + ":bust_in_silhouette:" + str(event['yes_rsvp_count'])  + " / " + ":busts_in_silhouette:  " + str(event['rsvp_limit']) + "\n " + map
                 color = "#010000"
                 payload={"username": botname, "icon_emoji": emoji, "attachments": [ {"fallback": message, "title": eventNameLink, "image_url": "", "text": message, "color": color}]}
@@ -48,50 +41,19 @@ class meetupslackers(object):
 
                 return payload
 
-	#backsup a file into the processed directory
-	#def backupFile(self, filename):	
-		#logging.info("backupFile")
-	#	filename1 = filename
-        #	open(filename1, "r").close()
-        #	filename2 = filename1 + "-" + str(datetime.datetime.now()).replace(" ", "-")
-        #	os.system ("cp %s %s" % (filename1, filename2))
-        #	os.system("mv %s \processed" % filename2)
-
-	#copy the contents of he file to a list, pass the list
-	#def contentsToList(self, filename):
-        	#logging.info("contentsToList")
-        	
-	#	queries = []
-        #	with open(filename, 'rb') as csvfile:
-        #        	reader = csv.reader(csvfile, delimiter='\n', quotechar='|')
-        #        	for row in reader:
-        #                	queries.append(row)
-	#	return queries
-	
-	#open up dem configs!
-	#def openConfig(self, filename):	
-		#logging.info("openConfig")
-	#	try:
-	#		openedDictionary = eval(open(filename).read())
-	#	except:
-	#		logging.critical("issue opening file, please contact your admin for assistance")
-	#		exit()
-	#	return openedDictionary
-
-	#Loads the external config file, and returns the meetup api json return call for our group 
+	#Snags the meetup api info as JSON 
 	def loadMeetup(self):	
-		#logging.info("loadMeetup called, opening config.conf")
-		#config = self.openConfig("config.conf")	
+		logging.info("loadMeetup called, opening config.conf")
 		r = requests.get(os.environ['meetup_api'])
-		#r = requests.get(config['meetup_api'])
 		return r.json()
 
-	#really really really ugly json parsing, this was a first draft and a candidate for reworking asap
-	#the basic gist is that it flattens out the json events with the relevant keys we need for the slack announcement
-	#and then puts the induvidual Json's into a list
-	# I think a better way to do this is to pull the list of existing keys off of the json and if it doesn't contain the list of required keys, then go ahead and add them with defualt null values (add for next version)
+	# really really really ugly json parsing, this was a first draft and a candidate for reworking asap
+	# the basic gist is that it flattens out the json events with the relevant keys we need for the slack announcement
+	# and then puts the induvidual Json's into a list
+	# I think a better way to do this is to pull the list of existing keys off of the json and if it doesn't contain the 
+	# list of required keys, then go ahead and add them with defualt null values (add for next version)
 	def parseJson(self,  meetupAPIKeys, group, venue):
-		#logging.info("try_parse_json")
+		logging.info("try_parse_json")
 		jsonList = []
 		returnDict = {}
 		meetupJson = self.meetupJson
@@ -164,7 +126,5 @@ class meetupslackers(object):
 			r = requests.post(self.http_webhook, data=json.dumps(self.formatSlackMessage(events[count], botname, emoji, message_add)))
 
 if __name__ == '__main__':
-	print "wtf"
 	meetupIntegration = meetupslackers()
 	meetupIntegration.announce(meetupIntegration.parseJson(meetupIntegration.json_keys, meetupIntegration.json_group, meetupIntegration.json_venue))
-	print meetupIntegration.http_webhook
