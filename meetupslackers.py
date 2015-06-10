@@ -6,7 +6,7 @@ class meetupslackers(object):
 		logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
 		logging.info("meetupslackers initiated")
 		#self.config = self.openConfig("config.conf")
-        	self.http_webhook = self.config['slack_webhook_dev']
+        	#self.http_webhook = self.config['slack_webhook_dev']
         	self.http_webhook = os.environ['slack_webhook_dev']
 		self.meetupJson = self.loadMeetup()
 		self.json_keys = ['name','how_to_find_us','maybe_rsvp_count','headcount','waitlist_count','time','yes_rsvp_count','id','visibility','updated','rsvp_limit','created','description','event_url','utc_offset','status','group','venue']
