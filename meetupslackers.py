@@ -17,9 +17,9 @@ class meetupslackers(object):
 		print "it should have printed"		
 
 	#check if file has contents: false = empty
-	def fileHasContents(self, filename):	
+	#def fileHasContents(self, filename):	
 		#logging.info("file has contents")
-		return True if os.path.isfile(filename) and os.path.getsize(filename) > 0 else False	
+	#	return True if os.path.isfile(filename) and os.path.getsize(filename) > 0 else False	
      
 	#simple slack message: botname, emoji and message
         def create_message(self, botname, emoji, message): 
@@ -52,39 +52,39 @@ class meetupslackers(object):
                 return payload
 
 	#backsup a file into the processed directory
-	def backupFile(self, filename):	
+	#def backupFile(self, filename):	
 		#logging.info("backupFile")
-		filename1 = filename
-        	open(filename1, "r").close()
-        	filename2 = filename1 + "-" + str(datetime.datetime.now()).replace(" ", "-")
-        	os.system ("cp %s %s" % (filename1, filename2))
-        	os.system("mv %s \processed" % filename2)
+	#	filename1 = filename
+        #	open(filename1, "r").close()
+        #	filename2 = filename1 + "-" + str(datetime.datetime.now()).replace(" ", "-")
+        #	os.system ("cp %s %s" % (filename1, filename2))
+        #	os.system("mv %s \processed" % filename2)
 
 	#copy the contents of he file to a list, pass the list
-	def contentsToList(self, filename):
+	#def contentsToList(self, filename):
         	#logging.info("contentsToList")
         	
-		queries = []
-        	with open(filename, 'rb') as csvfile:
-                	reader = csv.reader(csvfile, delimiter='\n', quotechar='|')
-                	for row in reader:
-                        	queries.append(row)
-		return queries
+	#	queries = []
+        #	with open(filename, 'rb') as csvfile:
+        #        	reader = csv.reader(csvfile, delimiter='\n', quotechar='|')
+        #        	for row in reader:
+        #                	queries.append(row)
+	#	return queries
 	
 	#open up dem configs!
-	def openConfig(self, filename):	
+	#def openConfig(self, filename):	
 		#logging.info("openConfig")
-		try:
-			openedDictionary = eval(open(filename).read())
-		except:
-			logging.critical("issue opening file, please contact your admin for assistance")
-			exit()
-		return openedDictionary
+	#	try:
+	#		openedDictionary = eval(open(filename).read())
+	#	except:
+	#		logging.critical("issue opening file, please contact your admin for assistance")
+	#		exit()
+	#	return openedDictionary
 
 	#Loads the external config file, and returns the meetup api json return call for our group 
 	def loadMeetup(self):	
 		#logging.info("loadMeetup called, opening config.conf")
-		config = self.openConfig("config.conf")	
+		#config = self.openConfig("config.conf")	
 		r = requests.get(os.environ['meetup_api'])
 		#r = requests.get(config['meetup_api'])
 		return r.json()
