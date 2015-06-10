@@ -30,7 +30,7 @@ class meetupslackers(object):
 		eventNameLink = "<" + event['event_url'] + "|" + event['name'] + ">"
 		map = ":pushpin:" + spacer + "<" + "https://www.google.com/maps/dir//" + (event['venue_address_1']).replace(" ", "+") + "+" + (event['venue_city']).replace(" ", "+") + "+" + (event['venue_state']).replace(" ", "+") + "+" + (event['venue_zip']).replace(" ", "+") + "|" + event['venue_name'] + ">"
 		description = (re.sub('<[^<]+?>', '', (event['description'])))[:144] + "..."
-		eventTime = time.strftime('%a, %b %d %I:%M %p', time.localtime((event['time']/1000)))
+		eventTime = time.strftime('%a, %b %d %I:%M %p', time.localtime((event['time']/1000)-25200))
                 message = description + "\n" + ":loudspeaker:" + spacer + eventTime  + "\n:users:" + spacer + ":bust_in_silhouette:" + str(event['yes_rsvp_count'])  + " / " + ":busts_in_silhouette:  " + str(event['rsvp_limit']) + "\n " + map
                 color = "#010000"
                 payload={"username": botname, "icon_emoji": emoji, "attachments": [ {"fallback": message, "title": eventNameLink, "image_url": "", "text": message, "color": color}]}
