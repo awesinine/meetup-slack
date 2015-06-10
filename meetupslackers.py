@@ -3,18 +3,15 @@ import requests, json, time, csv, logging, os, re
 #this isn't very pythonic yet, so chillax: I'm working on getting there :-D
 class meetupslackers(object):
 	def __init__(self): 
-		#logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
-		#logging.info("meetupslackers initiated")
+		logging.basicConfig(filename="meetupslackers.log",level=logging.DEBUG)
+		logging.info("meetupslackers initiated")
 		#self.config = self.openConfig("config.conf")
-        	#self.http_webhook = self.config['slack_webhook_dev']
+        	self.http_webhook = self.config['slack_webhook_dev']
         	self.http_webhook = os.environ['slack_webhook_dev']
-	        print "I dont fuck with you"
 		self.meetupJson = self.loadMeetup()
 		self.json_keys = ['name','how_to_find_us','maybe_rsvp_count','headcount','waitlist_count','time','yes_rsvp_count','id','visibility','updated','rsvp_limit','created','description','event_url','utc_offset','status','group','venue']
 		self.json_group = ['who', 'name', 'group_lat', 'created','join_mode','group_lon', 'urlname', 'id']
 		self.json_venue = ['city','name','zip','country','lon','state','address_1','repinned','lat','id']
-		print self.http_webhook
-		print "it should have printed"		
 
 	#check if file has contents: false = empty
 	#def fileHasContents(self, filename):	
@@ -23,7 +20,7 @@ class meetupslackers(object):
      
 	#simple slack message: botname, emoji and message
         def create_message(self, botname, emoji, message): 
-		#logging.info("create_message")
+		logging.info("create_message")
 		payload={"username": botname, "icon_emoji": emoji, "text": message}
                 return payload
 
